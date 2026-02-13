@@ -17,11 +17,11 @@ export function useGoals(initialGoals = [], initialStats = {}) {
   const activeGoals = computed(() => {
     return goals.value.filter(goal => goal.current_value < goal.target_value)
   })
-  
+
   const completedGoals = computed(() => {
     return goals.value.filter(goal => goal.current_value >= goal.target_value)
   })
-  
+
   const overdueGoals = computed(() => {
     return goals.value.filter(goal => {
       const isOverdue = goal.deadline && new Date(goal.deadline) < new Date()
@@ -29,7 +29,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       return isOverdue && isNotCompleted
     })
   })
-  
+
   const goalsByProgress = computed(() => {
     const progressRanges = {
       justStarted: [],
@@ -37,10 +37,10 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       almostThere: [],
       completed: [],
     }
-    
+
     goals.value.forEach(goal => {
       const percentage = Math.round((goal.current_value / goal.target_value) * 100)
-      
+
       if (percentage >= 100) {
         progressRanges.completed.push(goal)
       } else if (percentage >= 75) {
@@ -51,13 +51,13 @@ export function useGoals(initialGoals = [], initialStats = {}) {
         progressRanges.justStarted.push(goal)
       }
     })
-    
+
     return progressRanges
   })
-  
+
   const motivationalMessage = computed(() => {
     const completionRate = stats.completion_rate || 0
-    
+
     if (completionRate >= 100) {
       return "Goal completed. You're unstoppable."
     } else if (completionRate >= 75) {
@@ -72,7 +72,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       return "You're just getting started. Keep pushing."
     }
   })
-  
+
   const streak = computed(() => {
     // This would typically come from the backend
     // For now, we'll calculate based on recent activity
@@ -83,13 +83,13 @@ export function useGoals(initialGoals = [], initialStats = {}) {
   const fetchGoals = async (newFilters = {}) => {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await router.get('/goals', { ...filters, ...newFilters }, {
         preserveState: false,
         preserveScroll: true,
       })
-      
+
       goals.value = response?.props?.goals?.data || []
       Object.assign(stats, response?.props?.stats || {})
       Object.assign(filters, newFilters)
@@ -100,11 +100,11 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       loading.value = false
     }
   }
-  
+
   const createGoal = async (goalData) => {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await router.post('/goals', goalData, {
         preserveState: false,
@@ -112,7 +112,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
           fetchGoals(filters)
         }
       })
-      
+
       return response
     } catch (err) {
       error.value = 'Failed to create goal'
@@ -122,11 +122,11 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       loading.value = false
     }
   }
-  
+
   const updateGoal = async (goalId, goalData) => {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await router.put(`/goals/${goalId}`, goalData, {
         preserveState: false,
@@ -134,7 +134,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
           fetchGoals(filters)
         }
       })
-      
+
       return response
     } catch (err) {
       error.value = 'Failed to update goal'
@@ -144,11 +144,11 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       loading.value = false
     }
   }
-  
+
   const updateProgress = async (goalId, currentValue) => {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await router.patch(`/goals/${goalId}/progress`, {
         current_value: currentValue
@@ -158,7 +158,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
           fetchGoals(filters)
         }
       })
-      
+
       return response
     } catch (err) {
       error.value = 'Failed to update progress'
@@ -168,11 +168,11 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       loading.value = false
     }
   }
-  
+
   const deleteGoal = async (goalId) => {
     loading.value = true
     error.value = null
-    
+
     try {
       const response = await router.delete(`/goals/${goalId}`, {
         preserveState: false,
@@ -180,7 +180,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
           fetchGoals(filters)
         }
       })
-      
+
       return response
     } catch (err) {
       error.value = 'Failed to delete goal'
@@ -190,12 +190,12 @@ export function useGoals(initialGoals = [], initialStats = {}) {
       loading.value = false
     }
   }
-  
+
   const setFilters = (newFilters) => {
     Object.assign(filters, newFilters)
     fetchGoals(filters)
   }
-  
+
   const clearError = () => {
     error.value = null
   }
@@ -207,7 +207,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
     loading,
     error,
     filters,
-    
+
     // Computed
     activeGoals,
     completedGoals,
@@ -215,7 +215,7 @@ export function useGoals(initialGoals = [], initialStats = {}) {
     goalsByProgress,
     motivationalMessage,
     streak,
-    
+
     // Actions
     fetchGoals,
     createGoal,
