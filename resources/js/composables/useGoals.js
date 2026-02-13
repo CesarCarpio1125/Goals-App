@@ -33,7 +33,7 @@ export function useGoals() {
         try {
             const response = await form.post(route('goals.store'), goalData)
             form.reset()
-            
+
             // Return response for parent components to handle
             return response
         } catch (err) {
@@ -107,14 +107,14 @@ export function useGoals() {
         loading,
         error,
         form,
-        
+
         // Computed
         hasGoals,
         completedGoals,
         inProgressGoals,
         pendingGoals,
         completionRate,
-        
+
         // Methods
         createGoal,
         updateGoal,

@@ -3,6 +3,9 @@ import { Head } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
+// Confirmación: Create Goal Page Loaded (sin DEBUG)
+console.log('✅ Create Goal Page Loaded - Clean Version');
+
 const form = useForm({
     title: '',
     description: '',
@@ -14,7 +17,7 @@ const submit = async () => {
     if (!form.title.trim()) {
         return;
     }
-    
+
     try {
         await form.post(route('goals.store'), {
             onSuccess: () => {

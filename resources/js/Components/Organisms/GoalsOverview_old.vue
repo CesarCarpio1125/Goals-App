@@ -52,7 +52,7 @@
                   <span class="font-medium">{{ getGoalPercentage(filteredGoals[0]) }}%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-2">
-                  <div 
+                  <div
                     class="bg-gradient-to-r from-blue-500 to-indigo-500 h-2 rounded-full transition-all duration-300"
                     :style="{ width: getGoalPercentage(filteredGoals[0]) + '%' }"
                   />
@@ -76,7 +76,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Rest of goals in grid -->
       <div v-if="filteredGoals.length > 1" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <GoalCard
@@ -168,7 +168,7 @@ const filteredGoals = computed(() => {
 
   return props.goals.filter(goal => {
     const progress = (goal.current_value / goal.target_value) * 100
-    
+
     switch (activeFilter.value) {
       case 'in_progress':
         return progress < 100
@@ -210,7 +210,7 @@ const emptyStateMessage = computed(() => {
 
 const getGoalStatusClass = (goal) => {
   const progress = (goal.current_value / goal.target_value) * 100
-  
+
   if (progress >= 100) {
     return 'bg-green-100 text-green-800'
   } else if (goal.deadline && new Date(goal.deadline) < new Date()) {
@@ -222,7 +222,7 @@ const getGoalStatusClass = (goal) => {
 
 const getGoalStatusText = (goal) => {
   const progress = (goal.current_value / goal.target_value) * 100
-  
+
   if (progress >= 100) {
     return 'Completed'
   } else if (goal.deadline && new Date(goal.deadline) < new Date()) {

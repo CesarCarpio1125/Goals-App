@@ -59,6 +59,7 @@ const hasMore = computed(() => false) // No pagination on dashboard
 const isCreateGoalHovered = ref(false)
 const isCreateGoalLoading = ref(false)
 const isRefreshing = ref(false)
+const showProgressModal = ref(false)
 
 const handleCreateGoal = () => {
   console.log('Create Goal clicked')
@@ -98,17 +99,23 @@ const handleRefreshDashboard = async () => {
 
 const handleViewProgress = () => {
   console.log('View progress analytics')
-  // Navigate to analytics page
+  showProgressModal.value = true
+}
+
+const closeProgressModal = () => {
+  showProgressModal.value = false
 }
 
 const handleViewCalendar = () => {
   console.log('View calendar')
-  // Navigate to calendar view
+  // Navigate to calendar page
+  router.visit(route('calendar'))
 }
 
 const handleExportData = () => {
   console.log('Export data')
-  // Trigger data export
+  // Trigger dashboard PDF export
+  window.location.href = route('dashboard.export.pdf')
 }
 
 const handleSelectGoal = (goal) => {
@@ -296,6 +303,169 @@ onMounted(() => {
                 Dismiss
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress Analytics Modal -->
+      <div v-if="showProgressModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50" @click="closeProgressModal">
+        <div class="relative top-10 mx-auto p-5 border w-11/12 md:w-4/5 lg:w-3/4 xl:w-2/3 shadow-lg rounded-md bg-white" @click.stop>
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between mb-6">
+            <h3 class="text-2xl font-bold text-gray-900">Progress Analytics</h3>
+            <button @click="closeProgressModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Modal Content -->
+          <div class="space-y-6">
+            <!-- Overall Stats -->
+            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">Overall Performance</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-blue-600">{{ stats.total }}</div>
+                  <div class="text-sm text-gray-600">Total Goals</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-green-600">{{ stats.completed }}</div>
+                  <div class="text-sm text-gray-600">Completed</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-yellow-600">{{ stats.in_progress }}</div>
+                  <div class="text-sm text-gray-600">In Progress</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-purple-600">{{ Math.round(stats.completion_rate || 0) }}%</div>
+                  <div class="text-sm text-gray-600">Success Rate</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Progress Visualization -->
+            <div class="bg-white border border-gray-200 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">Progress Distribution</h4>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between text-sm font-medium text-gray-900 mb-2">
+                    <span>Completed Goals</span>
+                    <span>{{ stats.total > 0 ? Math.round((stats.completed / stats.total) * 100) : 0 }}%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      class="bg-green-500 h-3 rounded-full transition-all duration-500"
+                      :style="{ width: (stats.total > 0 ? (stats.completed / stats.total) * 100 : 0) + '%' }"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm font-medium text-gray-900 mb-2">
+                    <span>In Progress</span>
+                    <span>{{ stats.total > 0 ? Math.round((stats.in_progress / stats.total) * 100) : 0 }}%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      class="bg-yellow-500 h-3 rounded-full transition-all duration-500"
+                      :style="{ width: (stats.total > 0 ? (stats.in_progress / stats.total) * 100 : 0) + '%' }"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-sm font-medium text-gray-900 mb-2">
+                    <span>Pending</span>
+                    <span>{{ stats.total > 0 ? Math.round((stats.pending / stats.total) * 100) : 0 }}%</span>
+                  </div>
+                  <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div
+                      class="bg-gray-400 h-3 rounded-full transition-all duration-500"
+                      :style="{ width: (stats.total > 0 ? (stats.pending / stats.total) * 100 : 0) + '%' }"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Goals Progress -->
+            <div v-if="goals.length > 0" class="bg-gray-50 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">Recent Goals Progress</h4>
+              <div class="space-y-3">
+                <div v-for="goal in goals.slice(0, 5)" :key="goal.id" class="flex items-center justify-between p-3 bg-white rounded-lg">
+                  <div class="flex-1">
+                    <h5 class="font-medium text-gray-900">{{ goal.title }}</h5>
+                    <div class="mt-1 flex items-center text-sm text-gray-500">
+                      <span>Progress: {{ goal.tasks?.filter(t => t.completed).length || 0 }} / {{ goal.tasks?.length || 0 }} tasks</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <div class="w-16 bg-gray-200 rounded-full h-2">
+                      <div 
+                        class="bg-blue-600 h-2 rounded-full" 
+                        :style="{ width: (goal.tasks?.length > 0 ? (goal.tasks.filter(t => t.completed).length / goal.tasks.length) * 100 : 0) + '%' }"
+                      ></div>
+                    </div>
+                    <span class="text-sm font-medium text-gray-900 w-12 text-right">
+                      {{ goal.tasks?.length > 0 ? Math.round((goal.tasks.filter(t => t.completed).length / goal.tasks.length) * 100) : 0 }}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Motivational Insights -->
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-6">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">Insights & Recommendations</h4>
+              <div class="space-y-3">
+                <div class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-green-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <h5 class="text-sm font-medium text-green-800">Performance Analysis</h5>
+                    <p class="text-sm text-green-700 mt-1">
+                      {{ stats.completion_rate >= 70 ? 'Excellent progress! You\'re crushing your goals!' : 
+                         stats.completion_rate >= 40 ? 'Good progress! Keep up the momentum!' : 
+                         'You\'re just getting started. Every journey begins with a single step!' }}
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-start">
+                  <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-400 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <h5 class="text-sm font-medium text-blue-800">Recommendation</h5>
+                    <p class="text-sm text-blue-700 mt-1">
+                      {{ stats.in_progress > stats.completed ? 'Focus on completing existing goals before starting new ones.' :
+                         stats.pending > 0 ? 'Break down pending goals into smaller, manageable tasks.' :
+                         'Consider setting more challenging goals to push yourself further.' }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="mt-6 flex justify-end space-x-3">
+            <button
+              @click="closeProgressModal"
+              class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
+            >
+              Close
+            </button>
+            <button
+              @click="handleViewGoals"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+            >
+              View All Goals
+            </button>
           </div>
         </div>
       </div>

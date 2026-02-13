@@ -13,26 +13,17 @@ const props = defineProps({
 const form = useForm({
     title: props.goal.title,
     description: props.goal.description,
-    target_value: props.goal.target_value,
     deadline: props.goal.deadline ? new Date(props.goal.deadline).toISOString().split('T')[0] : '',
 });
 
 const submit = () => {
-    console.log('=== EDIT SUBMIT DEBUG ===');
-    console.log('Form data:', form.data());
-    console.log('Goal hash:', props.goal.hash || props.goal.id);
-    console.log('Route:', route('goals.update', props.goal.hash || props.goal.id));
-    
     form.patch(route('goals.update', props.goal.hash || props.goal.id), {
         onSuccess: (page) => {
-            console.log('Update successful:', page);
+            // Handle success
         },
         onError: (errors) => {
-            console.log('Update errors:', errors);
+            console.error('Update errors:', errors);
         },
-        onFinish: () => {
-            console.log('Update finished');
-        }
     });
 };
 
@@ -63,7 +54,7 @@ const formattedDeadline = computed(() => {
                         Back to Goal
                     </Link>
                 </div>
-                
+
                 <h1 class="text-3xl font-bold text-gray-900">Edit Goal</h1>
                 <p class="mt-2 text-gray-600">Update your goal information</p>
             </div>
@@ -193,29 +184,29 @@ const formattedDeadline = computed(() => {
                                 <dt class="text-sm font-medium text-gray-500">Title</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ goal.title }}</dd>
                             </div>
-                            
+
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Description</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ goal.description || 'No description' }}</dd>
                             </div>
-                            
+
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Target</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ goal.target_value }}</dd>
                             </div>
-                            
+
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Current Progress</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ goal.current_value || 0 }}</dd>
                             </div>
-                            
+
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Progress</dt>
                                 <dd class="mt-1 text-sm text-gray-900">
                                     {{ goal.target_value > 0 ? Math.round((goal.current_value / goal.target_value) * 100) : 0 }}%
                                 </dd>
                             </div>
-                            
+
                             <div>
                                 <dt class="text-sm font-medium text-gray-500">Deadline</dt>
                                 <dd class="mt-1 text-sm text-gray-900">{{ formattedDeadline }}</dd>

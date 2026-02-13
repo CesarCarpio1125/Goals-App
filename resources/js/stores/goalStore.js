@@ -23,11 +23,11 @@ export const useGoalStore = defineStore('goal', {
         activeGoals: (state) => {
             return state.goals.filter(goal => goal.current_value < goal.target_value)
         },
-        
+
         completedGoals: (state) => {
             return state.goals.filter(goal => goal.current_value >= goal.target_value)
         },
-        
+
         overdueGoals: (state) => {
             return state.goals.filter(goal => {
                 const isOverdue = goal.deadline && new Date(goal.deadline) < new Date()
@@ -35,7 +35,7 @@ export const useGoalStore = defineStore('goal', {
                 return isOverdue && isNotCompleted
             })
         },
-        
+
         goalsByProgress: (state) => {
             const progressRanges = {
                 justStarted: [],
@@ -43,10 +43,10 @@ export const useGoalStore = defineStore('goal', {
                 almostThere: [],
                 completed: [],
             }
-            
+
             state.goals.forEach(goal => {
                 const percentage = Math.round((goal.current_value / goal.target_value) * 100)
-                
+
                 if (percentage >= 100) {
                     progressRanges.completed.push(goal)
                 } else if (percentage >= 75) {
@@ -57,13 +57,13 @@ export const useGoalStore = defineStore('goal', {
                     progressRanges.justStarted.push(goal)
                 }
             })
-            
+
             return progressRanges
         },
-        
+
         motivationalMessage: (state) => {
             const completionRate = state.stats.completion_rate
-            
+
             if (completionRate >= 100) {
                 return "Goal completed. You're unstoppable."
             } else if (completionRate >= 75) {
@@ -78,7 +78,7 @@ export const useGoalStore = defineStore('goal', {
                 return "You're just getting started. Keep pushing."
             }
         },
-        
+
         streak: (state) => {
             // This would typically come from the backend
             // For now, we'll calculate based on recent activity
@@ -90,13 +90,13 @@ export const useGoalStore = defineStore('goal', {
         async fetchGoals(filters = {}) {
             this.loading = true
             this.error = null
-            
+
             try {
                 const response = await router.get('/goals', filters, {
                     preserveState: false,
                     preserveScroll: true,
                 })
-                
+
                 this.goals = response.props.goals.data || []
                 this.stats = response.props.stats || this.stats
                 this.filters = { ...this.filters, ...filters }
@@ -107,11 +107,11 @@ export const useGoalStore = defineStore('goal', {
                 this.loading = false
             }
         },
-        
+
         async createGoal(goalData) {
             this.loading = true
             this.error = null
-            
+
             try {
                 const response = await router.post('/goals', goalData, {
                     preserveState: false,
@@ -119,7 +119,7 @@ export const useGoalStore = defineStore('goal', {
                         this.fetchGoals(this.filters)
                     }
                 })
-                
+
                 return response
             } catch (error) {
                 this.error = 'Failed to create goal'
@@ -129,11 +129,11 @@ export const useGoalStore = defineStore('goal', {
                 this.loading = false
             }
         },
-        
+
         async updateGoal(goalId, goalData) {
             this.loading = true
             this.error = null
-            
+
             try {
                 const response = await router.put(`/goals/${goalId}`, goalData, {
                     preserveState: false,
@@ -141,7 +141,7 @@ export const useGoalStore = defineStore('goal', {
                         this.fetchGoals(this.filters)
                     }
                 })
-                
+
                 return response
             } catch (error) {
                 this.error = 'Failed to update goal'
@@ -151,11 +151,11 @@ export const useGoalStore = defineStore('goal', {
                 this.loading = false
             }
         },
-        
+
         async updateProgress(goalId, currentValue) {
             this.loading = true
             this.error = null
-            
+
             try {
                 const response = await router.patch(`/goals/${goalId}/progress`, {
                     current_value: currentValue
@@ -165,7 +165,7 @@ export const useGoalStore = defineStore('goal', {
                         this.fetchGoals(this.filters)
                     }
                 })
-                
+
                 return response
             } catch (error) {
                 this.error = 'Failed to update progress'
@@ -175,11 +175,11 @@ export const useGoalStore = defineStore('goal', {
                 this.loading = false
             }
         },
-        
+
         async deleteGoal(goalId) {
             this.loading = true
             this.error = null
-            
+
             try {
                 const response = await router.delete(`/goals/${goalId}`, {
                     preserveState: false,
@@ -187,7 +187,7 @@ export const useGoalStore = defineStore('goal', {
                         this.fetchGoals(this.filters)
                     }
                 })
-                
+
                 return response
             } catch (error) {
                 this.error = 'Failed to delete goal'
@@ -197,12 +197,12 @@ export const useGoalStore = defineStore('goal', {
                 this.loading = false
             }
         },
-        
+
         setFilters(filters) {
             this.filters = { ...this.filters, ...filters }
             this.fetchGoals(this.filters)
         },
-        
+
         clearError() {
             this.error = null
         },
