@@ -1,59 +1,276 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 📋 **README.md - Goals App**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🎯 **Acerca del Proyecto**
 
-## About Laravel
+**Goals App** es una aplicación web moderna para la gestión de metas y tareas personales, construida con **Laravel 10** y **Vue 3 + Inertia.js**. Ofrece una experiencia de usuario fluida con un dashboard dinámico, sistema de progreso basado en tareas y URLs seguras con hash IDs.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ **Características Principales**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🎯 **Gestión de Metas**
+- ✅ Crear, editar y eliminar metas personales
+- ✅ Asignar descripciones y fechas límite
+- ✅ Sistema de progreso automático basado en tareas
+- ✅ URLs seguras con hash IDs (previene manipulación)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 📋 **Gestión de Tareas**
+- ✅ Crear tareas asociadas a metas
+- ✅ Marcar tareas como completadas
+- ✅ Eliminar tareas individualmente
+- ✅ Ordenamiento automático de tareas
 
-## Learning Laravel
+### 📊 **Dashboard Dinámico**
+- ✅ Estadísticas en tiempo real (total, completadas, en progreso)
+- ✅ Mensajes motivacionales personalizados
+- ✅ Visualización de metas destacadas
+- ✅ Conteo de rachas de productividad
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🔒 **Seguridad**
+- ✅ Sistema de autorización con Laravel Policies
+- ✅ Hash IDs para evitar enumeración de URLs
+- ✅ Protección CSRF
+- ✅ Validación de inputs en frontend y backend
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ **Stack Tecnológico**
 
-## Laravel Sponsors
+### **Backend**
+- **Laravel 10** - Framework PHP
+- **PHP 8.5** - Lenguaje de programación
+- **SQLite** - Base de datos (configurable a MySQL/PostgreSQL)
+- **Laravel Policies** - Sistema de autorización
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### **Frontend**
+- **Vue 3** - Framework JavaScript
+- **Inertia.js** - Bridge entre Laravel y Vue
+- **Tailwind CSS** - Framework de estilos
+- **Atomic Design** - Arquitectura de componentes
 
-### Premium Partners
+### **Herramientas**
+- **Composer** - Gestor de paquetes PHP
+- **NPM/PNPM** - Gestor de paquetes JavaScript
+- **Vite** - Herramienta de build
+- **Git** - Control de versiones
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 **Instalación**
 
-## Contributing
+### **Prerrequisitos**
+- PHP >= 8.1
+- Composer
+- Node.js >= 16
+- NPM o PNPM
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### **Pasos de Instalación**
 
-## Code of Conduct
+```bash
+# 1. Clonar el repositorio
+git clone <repository-url>
+cd goals-app
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# 2. Instalar dependencias de PHP
+composer install
 
-## Security Vulnerabilities
+# 3. Instalar dependencias de JavaScript
+npm install
+# o
+pnpm install
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# 4. Configurar entorno
+cp .env.example .env
+php artisan key:generate
 
-## License
+# 5. Configurar base de datos
+# Editar .env con tu configuración de BD
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# 6. Ejecutar migraciones
+php artisan migrate
+
+# 7. Iniciar servidor de desarrollo
+php artisan serve
+npm run dev
+```
+
+## 📁 **Estructura del Proyecto**
+
+```
+goals-app/
+├── app/
+│   ├── Http/Controllers/     # Controladores Laravel
+│   ├── Models/              # Modelos Eloquent
+│   ├── Services/            # Lógica de negocio
+│   ├── DTOs/                # Data Transfer Objects
+│   └── Http/Requests/       # Form Requests
+├── resources/
+│   ├── js/
+│   │   ├── Pages/           # Páginas Vue
+│   │   ├── Components/      # Componentes UI
+│   │   └── Composables/     # Lógica reutilizable
+│   └── views/               # Blade templates
+├── database/
+│   ├── migrations/          # Migraciones de BD
+│   └── seeders/             # Datos de prueba
+├── routes/                  # Rutas de la aplicación
+└── public/                  # Assets públicos
+```
+
+## 🎨 **Arquitectura Frontend**
+
+### **Atomic Design**
+- **Atoms**: Componentes básicos (botones, inputs)
+- **Molecules**: Combinaciones de atoms (formularios, cards)
+- **Organisms**: Componentes complejos (dashboards, listas)
+- **Templates**: Layouts de página
+- **Pages**: Páginas completas
+
+### **Composables**
+- `useTaskManagement` - Gestión de tareas
+- `useTaskProgress` - Cálculo de progreso
+- `useGoals` - Gestión de metas
+
+## 🔧 **Configuración**
+
+### **Variables de Entorno (.env)**
+```env
+DB_CONNECTION=sqlite
+DB_DATABASE=/path/to/database.sqlite
+
+APP_NAME="Goals App"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost
+```
+
+### **Configuración de Base de Datos**
+```bash
+# Para SQLite
+touch database/database.sqlite
+
+# Para MySQL
+# Configurar en .env:
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=goals_app
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
+
+## 📊 **Funcionalidades Detalladas**
+
+### **Sistema de Hash IDs**
+- **Propósito**: Prevenir que los usuarios manipulen URLs numéricas
+- **Implementación**: Hashes únicos de 15 caracteres (`goal_` + 12 chars aleatorios)
+- **Fallback**: Compatibilidad con IDs existentes durante migración
+- **Seguridad**: URLs no predecibles y enumeración imposible
+
+### **Cálculo de Progreso**
+- **Basado en Tareas**: El progreso se calcula como `tareas_completadas / total_tareas`
+- **Estados Automáticos**: 
+  - `pending`: Sin tareas o 0% completado
+  - `in_progress`: 1-99% completado
+  - `completed`: 100% completado
+- **Actualización en Tiempo Real**: El progreso se actualiza al cambiar estado de tareas
+
+### **Dashboard Features**
+- **Estadísticas**: Total, completadas, en progreso, pendientes
+- **Meta Destacada**: La meta más importante o reciente
+- **Mensajes Motivacionales**: Basados en el progreso actual
+- **Quick Actions**: Acceso rápido a crear metas y ver detalles
+
+## 🧪 **Testing**
+
+```bash
+# Ejecutar tests de PHP
+php artisan test
+
+# Ejecutar tests de JavaScript (si existen)
+npm run test
+
+# Ejecutar coverage de tests
+php artisan test --coverage
+```
+
+## 📝 **API Endpoints**
+
+### **Goals**
+- `GET /goals` - Listar metas del usuario
+- `POST /goals` - Crear nueva meta
+- `GET /goals/{hash}` - Ver meta específica
+- `PATCH /goals/{hash}` - Actualizar meta
+- `DELETE /goals/{hash}` - Eliminar meta
+
+### **Tasks**
+- `GET /goals/{goal}/tasks` - Listar tareas de meta
+- `POST /goals/{goal}/tasks` - Crear tarea
+- `PATCH /goals/{goal}/tasks/{task}/toggle` - Cambiar estado tarea
+- `DELETE /goals/{goal}/tasks/{task}` - Eliminar tarea
+
+### **Dashboard**
+- `GET /dashboard` - Dashboard principal con estadísticas
+
+## 🔐 **Seguridad**
+
+### **Protecciones Implementadas**
+- **Authorization**: Laravel Policies para cada recurso
+- **Hash IDs**: URLs no enumerables
+- **CSRF**: Protección contra ataques CSRF
+- **Validation**: Validación en frontend y backend
+- **SQL Injection**: Protección mediante Eloquent ORM
+
+### **Best Practices**
+- No exponer IDs numéricos en URLs
+- Validar todos los inputs del usuario
+- Usar HTTPS en producción
+- Mantener dependencias actualizadas
+
+## 🚀 **Despliegue**
+
+### **Producción**
+```bash
+# Optimizar para producción
+composer install --optimize-autoloader --no-dev
+npm run build
+
+# Cachear configuración
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Ejecutar migraciones
+php artisan migrate --force
+```
+
+### **Variables de Entorno de Producción**
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
+```
+
+## 🤝 **Contribuir**
+
+1. Fork del repositorio
+2. Crear rama feature (`git checkout -b feature/amazing-feature`)
+3. Commit cambios (`git commit -m 'feat: add amazing feature'`)
+4. Push a la rama (`git push origin feature/amazing-feature`)
+5. Crear Pull Request
+
+## 📄 **Licencia**
+
+Este proyecto está bajo la Licencia MIT. Ver archivo `LICENSE` para detalles.
+
+## 🙏 **Agradecimientos**
+
+- **Laravel Team** - Framework PHP increíble
+- **Vue.js Team** - Framework JavaScript reactivo
+- **Tailwind CSS** - Framework de estilos utility-first
+- **Inertia.js** - Bridge moderno entre frameworks
+
+## 📞 **Soporte**
+
+Para reportar issues o solicitar features:
+- Crear un issue en GitHub
+- Contactar al maintainers
+- Revisar la documentación
+
+---
+
+**🎯 ¡Desarrollado con ❤️ para ayudarte a alcanzar tus metas!**
