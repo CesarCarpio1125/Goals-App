@@ -10,7 +10,6 @@
 - ✅ Crear, editar y eliminar metas personales
 - ✅ Asignar descripciones y fechas límite
 - ✅ Sistema de progreso automático basado en tareas
-- ✅ URLs seguras con hash IDs (previene manipulación)
 
 ### 📋 **Gestión de Tareas**
 - ✅ Crear tareas asociadas a metas
@@ -270,6 +269,32 @@ Para reportar issues o solicitar features:
 - Crear un issue en GitHub
 - Contactar al maintainers
 - Revisar la documentación
+
+## 📸 **Capturas de Pantalla**
+
+### 🏠 **Página de Inicio**
+![Inicio](doc/images/Inicio.png)
+
+### 🔐 **Autenticación**
+![Login](doc/images/Login.png)
+![Registro](doc/images/register.png)
+![Recuperar Contraseña](doc/images/ForgotPassword.png)
+
+### 📊 **Dashboard Principal**
+![Dashboard](doc/images/Dashboard.png)
+![Lista de Dashboard](doc/images/dashboardList.png)
+
+### 🎯 **Gestión de Metas**
+![Crear Metas](doc/images/CrearGoals.png)
+![Ver Metas](doc/images/VerGoals.png)
+![Calendario](doc/images/Calendar.png)
+
+### 📈 **Progreso**
+![Progreso](doc/images/Progress.png)
+
+### 📄 **Exportación PDF**
+![PDF 1](doc/images/pdf1.png)
+![PDF 2](doc/images/Pdf2.png)
 
 ---
 
