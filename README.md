@@ -273,8 +273,8 @@ Para reportar issues o solicitar features:
 ## 📸 **Capturas de Pantalla**
 
 ### 🏠 **Página de Inicio**
+![Inicio](doc/images/InicioPrincipal.png)
 ![Inicio](doc/images/Inicio.png)
-
 ### 🔐 **Autenticación**
 ![Login](doc/images/Login.png)
 ![Registro](doc/images/register.png)
