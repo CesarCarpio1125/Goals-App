@@ -113,3 +113,13 @@
      *.key
      *.crt
      config/jwt.php
+
+# AI/IDE Assistant Files
+.windsurf/
+agents/
+CLAUDE.md
+REFACTOR_SUMMARY.md
+
+# Documentation files (keep only README.md)
+*.md
+!README.md
